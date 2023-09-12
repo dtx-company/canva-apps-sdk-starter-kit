@@ -1,0 +1,42 @@
+name: Chromatic
+
+# Event for the workflow
+on:
+  push:
+    paths:
+      - '**.stories.tsx'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic-deployment:
+    runs-on: [self-hosted, frontend]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: cache-npm-storybook-${{ hashFiles('./storybook/package-lock.json') }}
+          restore-keys: |
+            cache-npm-
+
+      - name: Install Dependencies
+        working-directory: ./storybook
+        run: npm ci
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        # Chromatic GitHub Action options
+        with:
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: ./storybook
+          exitOnceUploaded: true
+          externals: "*"
