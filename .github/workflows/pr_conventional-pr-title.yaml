@@ -1,0 +1,14 @@
+name: PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+      - opened
+      - edited
+      - synchronize
+      - reopened
+jobs:
+  validate:
+    uses: dtx-company/shared-github-workflows/.github/workflows/conventional-pr-title.yaml@v1
