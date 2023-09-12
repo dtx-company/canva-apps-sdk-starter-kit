@@ -1,6 +1,5 @@
 name: Chromatic
 
-# Event for the workflow
 on:
   push:
     paths:
@@ -33,10 +32,7 @@ jobs:
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
-        # Chromatic GitHub Action options
         with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: ./storybook
           exitOnceUploaded: true
-          externals: "*"
