@@ -3,7 +3,7 @@ name: PR
 on:
   pull_request:
     branches:
-      - trunk
+      - main
     types: # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
       - opened
       - edited
