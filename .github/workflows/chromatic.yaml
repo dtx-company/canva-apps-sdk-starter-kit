@@ -36,3 +36,4 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: ./storybook
           exitOnceUploaded: true
+          autoAcceptChanges: true
